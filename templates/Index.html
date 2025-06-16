@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthGuard AI - Truth Detection Platform</title>
+    <link rel="stylesheet" href="D:/ai image detect/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-shield-alt"></i>
+                <span>TruthGuard AI</span>
+            </div>
+            <div class="nav-links">
+    <button class="nav-link" onclick="showPage('home')">Home</button>
+    <button class="nav-link" onclick="showPage('text-analysis')">Text Analysis</button>
+    <button class="nav-link" onclick="showPage('image-analysis')">Image Analysis</button>
+    <button class="nav-link" onclick="showPage('about-project')">About Project</button>
+    <button class="nav-link" onclick="showPage('about-us')">About Us</button>
+</div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Header -->
+        <header class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">AI-Powered Truth Detection</h1>
+                <p class="hero-description">
+                    Advanced machine learning algorithms to verify news authenticity and detect deepfake images. 
+                    Get instant analysis with confidence scores and detailed algorithm breakdowns.
+                </p>
+                
+                <div class="feature-cards">
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-file-text"></i>
+                        </div>
+                        <h3>News Article Analysis</h3>
+                        <p>Analyze news articles for authenticity using natural language processing</p>
+                        <button class="btn btn-blue" onclick="showPage('text-analysis')">
+                            <i class="fas fa-play"></i>
+                            Analyze Text
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">
+                            <i class="fas fa-image"></i>
+                        </div>
+                        <h3>Image Verification</h3>
+                        <p>Detect deepfakes and manipulated images using computer vision</p>
+                        <button class="btn btn-purple" onclick="showPage('image-analysis')">
+                            <i class="fas fa-play"></i>
+                            Analyze Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <h2>Advanced AI Models & Algorithms</h2>
+                <div class="features-grid">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Multiple ML Models</h4>
+                        <p>Random Forest,Decision Tree, Gradient Boosting, Logistic Regression and Neural Networks working together</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>High Accuracy</h4>
+                        <p>Up to 96% accuracy with ensemble learning and cross-validation</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Real-time Processing</h4>
+                        <p>Instant analysis with detailed confidence scores and explanations</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class='fas fa-shield-alt' style='color:blue '></i>
+                        </div>
+                        <h4>Security</h4>
+                        <p>We don't store any kind of users data <br> Process all data locally</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>© 2025 TruthGuard AI. Made with <i class='fa fa-heart' style='color: red'></i> by Viper </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Text Analysis Page -->
+    <div id="text-analysis" class="page">
+        <div class="page-header">
+            <button class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+            <div class="page-title">
+                <i class="fas fa-file-text"></i>
+                <h1>News Article Analysis</h1>
+            </div>
+        </div>
+
+        <div class="analysis-container">
+            <div class="analysis-grid">
+                <!-- Input Section -->
+                <div class="card input-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-text"></i>
+                        <h3>Input News Article</h3>
+                        <p>Paste the news article text below for authenticity analysis</p>
+                    </div>
+                    <div class="card-content">
+                        <textarea 
+                            id="text-input" 
+                            placeholder="Paste your news article here..."
+                            rows="12"
+                        ></textarea>
+                        <button id="analyze-text-btn" class="btn btn-blue btn-full" onclick="analyzeText()">
+                            <i class="fas fa-play"></i>
+                            <span>Analyze Article</span>
+                        </button>
+                        
+                        <div id="text-progress" class="progress-container" style="display: none;">
+                            <div class="progress-info">
+                                <span>Processing...</span>
+                                <span id="text-progress-percent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="text-progress-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="card results-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Analysis Results</h3>
+                        <p>Machine learning analysis and confidence scores</p>
+                    </div>
+                    <div class="card-content">
+                        <div id="text-results-placeholder" class="results-placeholder">
+                            <i class="fas fa-file-text"></i>
+                            <p>Enter a news article to see analysis results</p>
+                        </div>
+                        <div id="text-results" class="results-content" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Analysis Page -->
+    <div id="image-analysis" class="page">
+        <div class="page-header">
+            <button class="back-btn" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+            <div class="page-title">
+                <i class="fas fa-image"></i>
+                <h1>Image Verification</h1>
+            </div>
+        </div>
+
+        <div class="analysis-container">
+            <div class="analysis-grid">
+                <!-- Input Section -->
+                <div class="card input-card">
+                    <div class="card-header">
+                        <i class="fas fa-upload"></i>
+                        <h3>Upload Image</h3>
+                        <p>Upload an image to check for deepfakes and digital manipulation</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="upload-area" onclick="document.getElementById('image-input').click()">
+                            <div id="upload-placeholder">
+                                <i class="fas fa-image"></i>
+                                <h4>Choose an image</h4>
+                                <p>PNG, JPG up to 10MB</p>
+                            </div>
+                            <div id="image-preview" style="display: none;">
+                                <img id="preview-img" alt="Selected image">
+                                <p id="image-name"></p>
+                            </div>
+                        </div>
+                        <input type="file" id="image-input" accept="image/*" style="display: none;" onchange="handleImageSelect(event)">
+                        
+                        <button id="analyze-image-btn" class="btn btn-purple btn-full" onclick="analyzeImage()" disabled>
+                            <i class="fas fa-play"></i>
+                            <span>Analyze Image</span>
+                        </button>
+                        
+                        <div id="image-progress" class="progress-container" style="display: none;">
+                            <div class="progress-info">
+                                <span>Processing...</span>
+                                <span id="image-progress-percent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="image-progress-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="card results-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Analysis Results</h3>
+                        <p>Computer vision analysis and deepfake detection</p>
+                    </div>
+                    <div class="card-content">
+                        <div id="image-results-placeholder" class="results-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>Upload an image to see analysis results</p>
+                        </div>
+                        <div id="image-results" class="results-content" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Project Page -->
+    <div id="about-project" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </button>
+        <div class="page-title">
+            <i class="fas fa-info-circle"></i>
+            <h1>About the Project</h1>
+        </div>
+    </div>
+    <div class="about-project-container">
+        <section class="about-block">
+            <h2>TruthGuard AI – Unmask the Fake. Trust What’s Real.</h2>
+            <p>
+                TruthGuard AI is a web application that integrates machine learning models in its backend to perform real-time verification of textual and visual content. It analyzes news articles to detect misinformation and uses deepfake detection techniques to assess the authenticity of uploaded images, offering users a reliable tool against digital deception.
+            </p>
+            <p>
+                <h2> Motivation behind the Project:</h2>
+                <p>
+                    In a world where misinformation moves fast, TruthGuard AI empowers users to separate fact from fiction. Powered by cutting-edge machine learning, it verifies news and detects image manipulation—ensuring you engage only with authentic content.            
+                </p>
+
+                <p>
+                <h2>Project Goals:</h2>
+                <ul>
+                    <li>To provide a user-friendly interface for news and image verification.</li>
+                    <li>To educate users about the importance of verifying information.</li>
+                    <li>To contribute to the fight against misinformation and digital manipulation.</li>
+                </ul>
+            </p>
+                <h2>Key Features:</h2>
+                <ul>
+                    <li>Analyzing news articles with various machine learning algorithms to predict their authenticity.</li>
+                    <li>Analyzing image with various machine learning algorithms to predict their authenticity.</li>
+                    </ul>
+            </p>
+           
+            
+            
+            
+        </section>
+        <section class="about-block">
+            <h2>Algorithms Used</h2>
+            <ul>
+                <li><b>Decision Tree</b></li>
+                <li><b>Random Forest</b></li>
+                <li><b>Gradient Boosting</b></li>
+                <li><b>Logistic Regression</b></li>
+                <li><b>Neural Network</b></li>
+                <li><b>Convolutional Neural Network (CNN)</b> (for image analysis)</li>
+            </ul>
+        </section>
+        <section class="about-block">
+            <h2>Purpose of use multiple Algorithms</h2>
+            <p>
+                Using multiple algorithms allows us to leverage the strengths of each model, improving overall accuracy and robustness. Ensemble methods combine predictions from different models to achieve better performance than any single model alone.
+            </ul>
+        </section>
+        <section class="about-block">
+        <section class="about-block">
+            <h2>Performance Precision</h2>
+            <ul>
+                <li>Text Analysis: Up to 96% accuracy in detecting misinformation.</li>
+                <li>Image Analysis: High precision in identifying deepfakes and manipulated images.</li>
+            <img src="{{ url_for('static', filename='graph/model qaccurecy fake news.png') }}" alt="Model Performance Histogram" class="about-histogram">
+        
+            <p class="histogram-caption">Model accuracy distribution across different algorithms for fake news detection.</p>
+            <img src="{{ url_for('static', filename='graph/fakeimage.png') }}" alt="Model Performance Histogram" class="about-histogram">
+            <p class="histogram-caption">Model accuracy distribution for fake image detection.</p>
+        </section>
+
+            <h2>Feature Possibilities</h2>
+            <ul>
+                <li>Sentiment Analysis</li>
+                <li>Text Complexity</li>
+                <li>Credibility Scoring</li>
+                <li>Image Manipulation Detection</li>
+            </ul>
+        </section>
+        <section class="about-block">
+                <h2>Future Enhancements:</h2>
+                <ul>
+                    <li>Integration with social media platforms for real-time verification.</li>
+                    <li>Expansion of supported languages for text analysis.</li>
+                    <li>Improved user interface and experience based on user feedback.</li>
+                </ul>
+            </p>
+        </section>
+        <section class="about-block">
+            <h2 style="text-align: center;">Contact us </h2>
+            <p style="text-align: center;">
+                For any queries or feedback, please contact us at: <a href="mailto:tasirahhamed@gmail.com"> truthguard.ai@gmail.com</a>
+            </p>
+            
+    </div>
+</div>
+
+<!-- About Us Page -->
+<div id="about-us" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('home')">
+            <i class="fas fa-arrow-left"></i>
+            Back
+        </button>
+        <div class="page-title">
+            <i class="fas fa-users"></i>
+            <h1>About Us</h1>
+            <ul>
+
+        </div>
+    </div>
+    <div class="about-us-container">
+        <h2 style="text-align:center"><i class="fas fa-info-circle"></i>Meet the Team Behind TruthGuard AI</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='team/moujhuri.jpg') }}" alt="Tasir">
+                <h3>Prof.Dr.Moujhuri Patra</h3>
+                <p>Project Guide</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='team/tfs1.jpg') }}" alt="Tasir">
+                <h3>Tasir Ahhamed Laskar</h3>
+                <p>Team Lead<br>Backend Developer.<br>UI Developer.</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='team/anu1.jpg') }}" alt="Member 2">
+                <h3>Anusree Guin</h3>
+                <p>Co-Developer<br>Help to implement creative idea. </p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='team/sayan1.jpg') }}" alt="Member 3">
+                <h3>Sayan Chakraborty</h3>
+                <p>Tester<Br>Visual representation</p>
+            </div>
+            <div class="team-member">
+                <img src="{{ url_for('static', filename='team/riya1.jpg') }}" alt="Member 4">
+                <h3>Riya Mondal</h3>
+                <p>Responsible for Data Collection and Validation.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="D:/ai image detect/static/script.js"></script>
+    <!-- Load JavaScript -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
