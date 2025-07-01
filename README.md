@@ -16,7 +16,9 @@ TruthGuard AI is an AI-powered Flask web application that detects fake news usin
 - **Tools**: OpenCV, NumPy, Pandas, Bootstrap, HTML/CSS
 
 ## 📸 Screenshots
-_Add relevant screenshots here (model output, web UI, etc.)_
+### 🔍 Home Page
+![Home Page](./home.jpeg)
+
 
 ## 🛠️ Installation
 
